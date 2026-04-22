@@ -36,7 +36,15 @@ function listarNumerosReversa()
 
 function listarPares()
 {
-    for (let i=0 ; i<10; i += 2)  /// operador abreviado
+    for (let i=0 ; i<10; i+=2)  /// operador abreviado
+    {
+        console.log(i);
+    }
+}
+
+function listarImpares()
+{
+    for (let i=1 ; i<=7; i+=2)  /// operador abreviado
     {
         console.log(i);
     }
