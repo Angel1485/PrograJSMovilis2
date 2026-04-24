@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* CONTENEDOR SUPERIOR */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+}
+
+/* BOTÓN */
+.btn {
+  background: white;
+  color: #2a5298;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #2a5298;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* CONTENEDOR DE TARJETAS */
+.contenedor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* TARJETAS */
+.item {
+  background: white;
+  color: #2a5298;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item:hover {
+  background-color: aqua;
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .contenedor {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 12px;
+  }
+
+  .item {
+    font-size: 20px;
+    min-height: 80px;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* CELULAR */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .contenedor {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .item {
+    font-size: 18px;
+    min-height: 70px;
+    border-radius: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+  /* CELULAR: una tarjeta por fila */
+@media (max-width: 480px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+  }
+}
+}
+
+
+/* CONTENEDOR DE INPUTS */
+.inputs {
+display: flex;
+gap: 15px;
+justify-content: center;
+flex-wrap: wrap;
+}
+/* INPUT BASE */
+.inputs input {
+width: 140px;
+padding: 12px 15px;
+border-radius: 25px;
+border: none;
+outline: none;
+font-size: 14px;
+text-align: center;
+font-weight: bold;
+color: #2a5298;
+background: white;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+transition: all 0.25s ease;
+}
+/* PLACEHOLDER */
+.inputs input::placeholder {
+color: #8aa3d0;
+font-weight: normal;
+}
+/* HOVER */
+.inputs input:hover {
+transform: scale(1.05);
+box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+/* FOCUS (cuando escribes) */
+.inputs input:focus {
+box-shadow: 0 0 0 3px rgba(42,82,152,0.3),
+0 8px 20px rgba(0,0,0,0.3);
+transform: scale(1.05);
+}
