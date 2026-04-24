@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla del 3</title>
+    <link rel="stylesheet" href="multiplicar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Instrucciones claras -->
+        <div class="instructions">
+            <p><span class="emoji">👉</span> <strong>¿Cómo usar?</strong></p>
+            <p><span class="emoji">1️⃣</span> Escribe un número en la caja (ejemplo: 3, 5, 7, 12...)</p>
+            <p><span class="emoji">2️⃣</span> Presiona el botón <strong>"PROBAR"</strong> o presiona <strong>Enter</strong> ✨</p>
+            <p><span class="emoji">🎉</span> ¡Verás la tabla de multiplicar aparecer mágicamente!</p>
+        </div>
+
+        <h1>Tabla de Multiplicar del 3</h1>
+
+        <div class="input-group">
+            <label for="txtNumero">🔢 Ingresa un número:</label>
+            <div class="input-wrapper">
+                <input type="number" id="txtNumero" placeholder="Ejemplo: 3" value="3">
+                <button class="btn-probar" onclick="generarTablas()">✨ PROBAR ✨</button>
+            </div>
+        </div>
+
+        <!-- Mensajes de ayuda -->
+        <div class="info-message" id="infoMessage">
+            💡 ¡Tip: Prueba con números desde el numero 1 en adelante!
+        </div>
+        <div class="error-message" id="errorMessage">
+            ⚠️ ¡Ups! Escribe un número válido (ejemplo: 3, 5, 10)
+        </div>
+
+        <div class="tabla" id="tablaContenedor">
+            <div class="tabla-header">
+                <span>📖 ¡Aprendamos la tabla!</span>
+            </div>
+            <div class="fila">3 × 1 = 3</div>
+            <div class="fila">3 × 2 = 6</div>
+            <div class="fila">3 × 3 = 9</div>
+            <div class="fila">3 × 4 = 12</div>
+            <div class="fila">3 × 5 = 15</div>
+            <div class="fila">3 × 6 = 18</div>
+            <div class="fila">3 × 7 = 21</div>
+            <div class="fila">3 × 8 = 24</div>
+            <div class="fila">3 × 9 = 27</div>
+            <div class="fila">3 × 10 = 30</div>
+        </div>
+        
+        <footer>
+            Creado por: Angel Sarango 🧸
+        </footer>
+    </div>
+    
+    <script src="multiplicar.js"></script>
+</body>
+</html>

@@ -1,28 +1,27 @@
+function ejecutar(numEjercicio)
+{
+    switch (numEjercicio)
+    {
+        case 1:
+            listarNumeros(); 
+        break;
+        case 2:
+            listarNumerosReversa(); 
+        break;
+        case 3:
+            listarPares(); 
+        break;
+        case 4:
+            listarImpares(); 
+        break;
+    }
+}
+
 function listarNumeros()
 {
     for (let i=0 ; i<=3; i++)
     {
         console.log(i); 
-    }
-}
-
-function ejecutar(numEjercicio)
-{
-    if (numEjercicio === 1)
-    {
-        listarNumeros(); 
-    }
-    if (numEjercicio === 2)
-    {
-        listarNumerosReversa(); 
-    }
-    if (numEjercicio === 3)
-    {
-        listarPares(); 
-    }
-     if (numEjercicio === 4)
-    {
-        listarImpares(); 
     }
 }
 
