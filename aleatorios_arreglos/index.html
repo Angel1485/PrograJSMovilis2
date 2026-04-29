@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Números Aleatorios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #divTable {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Generador de Números Aleatorios</h2>
+    <label>Ingrese el tamaño del arreglo (5 - 20): </label>
+    <input type="number" id="txtTamaño" min="5" max="20">
+    <button onclick="generarAleatorios()">Generar Números</button>
+    <div id="divTable">
+
+    </div>
+    <script src="utilitarios.js"></script>
+    <script src="aleatorios.js"></script>
+</body>
+</html>
