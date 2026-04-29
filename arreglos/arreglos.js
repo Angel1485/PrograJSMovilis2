@@ -1,4 +1,4 @@
-let edadesIzquierdo = [];  // Arreglo para almacenar las edades del lado izquierdo
+let  edadesIzquierdo = [];  // Arreglo para almacenar las edades del lado izquierdo
 let edadesDerecho = [];    // Arreglo para almacenar las edades del lado derecho
 
 function pintarArregloIzquierda() {
@@ -94,17 +94,23 @@ function eliminarDerecho(indice) {
     pintarArregloDerecha();
 }
 
+
 function agregarEdad() {
     const inputEdad = document.getElementById('edadInput');
-    const valorIngresado = inputEdad.value;
+    const valorIngresado = inputEdad.value.trim(); // Eliminar espacios en blanco
     const edad = parseInt(valorIngresado);
     
-    if (!isNaN(edad)) {
+    // Validar que no esté vacío, sea un número válido, mayor que 0 y no sea negativo
+    if (valorIngresado === '') {
+        alert('Por favor, ingrese una edad');
+    } else if (isNaN(edad)) {
+        alert('Por favor, ingrese una edad válida (solo números enteros)');
+    } else if (edad <= 0) {
+        alert('Por favor, ingrese una edad válida mayor a 0 (cero)');
+    } else {
         edadesIzquierdo.push(edad);
         inputEdad.value = '';
-        pintarArregloIzquierda(); // Cambiar pintarArreglos() por esta
-    } else {
-        alert('Por favor, ingrese una edad válida (número entero)');
+        pintarArregloIzquierda();
     }
 }
 
