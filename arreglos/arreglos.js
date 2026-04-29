@@ -159,3 +159,16 @@ function moverHaciaIzquierda(indice) {
 //     pintarArregloIzquierda();
 // });
 
+function moverTodoDerecha() {
+    edadesDerecho.push(...edadesIzquierdo);
+    edadesIzquierdo = [];
+    pintarArregloIzquierda();
+    pintarArregloDerecha();
+}
+
+function moverTodoIzquierda() {
+    edadesIzquierdo.push(...edadesDerecho);
+    edadesDerecho = [];
+    pintarArregloIzquierda();
+    pintarArregloDerecha();
+}

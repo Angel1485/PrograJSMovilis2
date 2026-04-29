@@ -127,3 +127,11 @@ tr:nth-child(even) {
         width: 100%;
     }
 }
+
+.div-center {
+    text-align: center;
+}
+
+.botones-mover {
+    display: inline-block;
+}
