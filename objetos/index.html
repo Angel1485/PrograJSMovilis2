@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetos</title>
+</head>
+<body>
+    <!-- <input type="button" value="Probar Atributos" onclick="probarAtributos();">
+    <input type="button" value="Modificar Atributos" onclick="modificarAtributos();">
+    <input type="button" value="Crear Clente" onclick="crearCliente();">
+    <input type="button" value="Aumentar Saldo" onclick="probarIncrementarSaldo();">
+    <input type="button" value="Mayor de Personas" onclick="probarDeterminarMayor();"> -->
+
+    <h5>Cedula</h5>
+    <input type="text" id="txtCedula"/>
+    <h5>Nombre</h5>
+    <input type="text" id="txtNombre"/>
+    <h5>Edad</h5>
+    <input type="text" id="txtEdad"/>
+    <input type="button" value="Agregar Cliente" onclick="crearCliente();"/>
+    <input type="button" value="Mostrar Clientes" onclick="mostrarClientes();">
+    <input type="button" value="Guardar/Modificar Cliente" onclick="guardarCambios();"><br><br><br><br>
+    <div id="TablaClientes">
+    </div>
+    <h5>Ingrese la Cedula</h5>
+    <input type="text" id="txtCedulaBusqueda"/>
+    <input type="button" value="Buscar" onclick="ejecutarBusqueda();"/>
+    
+
+</body>
+<script src="objetos.js"></script>
+<script src="clientes.js"></script>
+<script src="utilitarios.js"></script>
+</html>
