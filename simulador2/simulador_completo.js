@@ -46,6 +46,11 @@ document.getElementById('btnClientes').addEventListener('click', function() {
     mostrarSeccion("clientes");
 });
 
+// Botón para creditos
+document.getElementById('btnCreditos').addEventListener('click', function() {
+    mostrarSeccion("seccionCreditos");
+});
+
 function guardarTasa() {
     // 1. Obtener el valor del input
     const inputTasa = document.getElementById('tasaInteres');
@@ -174,4 +179,138 @@ function pintarClientes() {
 document.getElementById('btnGuardarCliente').addEventListener('click', guardarCliente);
 
 
+// Función calcularDisponible
+function calcularDisponible(ingresos, egresos) {
+    let disponible = ingresos - egresos;
+    if (disponible < 0) {
+        return 0;
+    }
+    return disponible;
+}
 
+// Función calcularCapacidadPago
+function calcularCapacidadPago(montoDisponible) {
+    return montoDisponible * 0.5;
+}
+
+// Función calcularInteresSimple
+function calcularInteresSimple(monto, tasa, plazoAnios) {
+    // plazoAnios * monto * (tasa / 100)
+    return plazoAnios * monto * (tasa / 100);
+}
+
+// Función calcularTotalPagar
+function calcularTotalPagar(monto, interes) {
+    // monto + interés + USD 100 (impuestos SOLCA)
+    return monto + interes + 100;
+}
+
+// Función calcularCuotaMensual
+function calcularCuotaMensual(total, plazoAnios) {
+    let numeroMeses = plazoAnios * 12;
+    return total / numeroMeses;
+}
+
+// Función aprobarCredito
+function aprobarCredito(capacidadPago, cuotaMensual) {
+    if (capacidadPago > cuotaMensual) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// ==================== PARTE 2: CRÉDITOS ====================
+
+// Variable para guardar el cliente actual
+let clienteActual = null;
+
+// Parte 2: Buscar cliente
+function buscarClienteCredito() {
+    // 1. Tomar valor de cédula
+    let cedula = document.getElementById('txtCedula').value;
+    
+    // 2. Buscar cliente
+    let cliente = buscarCliente(cedula);
+    
+    // 3 y 4. Mostrar datos o mensaje
+    if (cliente) {
+        clienteActual = cliente;
+        mostrarDatosCliente(cliente);
+    } else {
+        clienteActual = null;
+        document.getElementById('datosClienteCredito').innerHTML = '<p style="color:red;">Cliente no encontrado</p>';
+        document.getElementById('resultadoCredito').innerHTML = '';
+    }
+}
+
+// Parte 3: Mostrar datos del cliente
+function mostrarDatosCliente(cliente) {
+    let html = `
+        <h3>Datos del Cliente</h3>
+        <p><strong>Cédula:</strong> ${cliente.cedula}</p>
+        <p><strong>Nombre:</strong> ${cliente.nombre}</p>
+        <p><strong>Apellido:</strong> ${cliente.apellido}</p>
+        <p><strong>Ingresos:</strong> $${cliente.ingresos}</p>
+        <p><strong>Egresos:</strong> $${cliente.egresos}</p>
+    `;
+    document.getElementById('datosClienteCredito').innerHTML = html;
+}
+
+// Parte 4 y 5: Calcular crédito del cliente
+function calcularCreditoCliente() {
+    if (!clienteActual) {
+        alert('Primero busque un cliente');
+        return;
+    }
+    
+    // Obtener valores
+    let monto = parseFloat(document.getElementById('txtMontoCredito').value);
+    let plazoAnios = parseFloat(document.getElementById('txtPlazoCredito').value);
+    let tasaInteres1 = tasaInteres; // Tasa para este taller
+    
+    // Usar funciones existentes
+    let disponible = calcularDisponible(clienteActual.ingresos, clienteActual.egresos);
+    let capacidadPago = calcularCapacidadPago(disponible);
+    let interes = calcularInteresSimple(monto, tasaInteres, plazoAnios);
+    let totalPagar = calcularTotalPagar(monto, interes);
+    let cuotaMensual = calcularCuotaMensual(totalPagar, plazoAnios);
+    let aprobado = aprobarCredito(capacidadPago, cuotaMensual);
+    
+    // Parte 5: Mostrar resultado
+    mostrarResultadoCredito(capacidadPago, totalPagar, cuotaMensual, aprobado);
+}
+
+// Parte 5 y 6: Mostrar resultado con estilos
+function mostrarResultadoCredito(capacidadPago, totalPagar, cuotaMensual, aprobado) {
+    let resultadoDiv = document.getElementById('resultadoCredito');
+    let estado = aprobado ? "APROBADO" : "RECHAZADO";
+    
+    resultadoDiv.innerHTML = `
+        Capacidad de pago: $${capacidadPago.toFixed(2)}<br>
+        Total a pagar: $${totalPagar.toFixed(2)}<br>
+        Cuota mensual: $${cuotaMensual.toFixed(2)}<br>
+        RESULTADO: ${estado}
+    `;
+    
+    // Parte 6: Aplicar clase según resultado
+    resultadoDiv.className = aprobado ? "aprobado" : "rechazado";
+}
+
+// Función para limpiar todo el módulo de créditos
+function limpiarCreditos() {
+    // Limpiar campo de cédula
+    document.getElementById('txtCedula').value = '';
+    
+    // Limpiar campos de solicitud
+    document.getElementById('txtMontoCredito').value = '';
+    document.getElementById('txtPlazoCredito').value = '';
+    
+    // Limpiar resultados
+    document.getElementById('datosClienteCredito').innerHTML = '';
+    document.getElementById('resultadoCredito').innerHTML = '';
+    document.getElementById('resultadoCredito').className = '';
+    
+    // Limpiar cliente actual
+    clienteActual = null;
+}
