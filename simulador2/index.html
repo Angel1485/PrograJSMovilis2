@@ -15,6 +15,7 @@
   <button id="btnParametros">Parámetros</button>
   <button id="btnClientes">Clientes</button>
   <button id="btnCreditos">Créditos</button>
+  <button id="btnCreditosRegistrados">Créditos Registrados</button>
 </nav>
 
 <section id="parametros">
@@ -114,8 +115,46 @@
     <button onclick="calcularCreditoCliente()">Calular Crédito</button>
 
     <div id="resultadoCredito"></div>
+    <button id="btnAsignarCredito" disabled onclick="asignarCredito()">✅ Asignar Crédito</button>
 </section>
 
+<!-- SECCIÓN CRÉDITOS REGISTRADOS (HISTORIAL) -->
+<div id="seccionHistorial">
+    <h2>📋 Créditos Registrados</h2>
+    
+    <div class="filtros-creditos">
+        <input type="text" id="buscarCedulaListado" placeholder="Buscar por cédula...">
+        <button class="btn-primary" onclick="buscarCreditosCliente()">🔍 Buscar</button>
+        <button class="btn-secondary" onclick="pintarCreditos(creditos)">📋 Ver todos</button>
+        <!-- <button class="btn-secondary" onclick="exportarHistorial()">📄 Exportar</button> -->
+    </div>
+    
+    <div class="tabla-container">
+        <table id="tablaCreditos">
+            <thead>
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Monto</th>
+                    <th>Tasa</th>
+                    <th>Plazo</th>
+                    <th>Cuota</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTablaCreditos">
+                <tr>
+                    <td colspan="8" style="text-align: center;">No hay créditos registrados</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="buttons" style="margin-top: 20px;">
+        <button class="btn-secondary" onclick="limpiarHistorial()">🗑️ Limpiar Todo</button>
+    </div>
+</div>
 
 <script src="simulador_completo.js"></script>
 <script src="utilitarios.js"></script>

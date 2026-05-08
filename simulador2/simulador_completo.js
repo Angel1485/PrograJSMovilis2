@@ -51,6 +51,13 @@ document.getElementById('btnCreditos').addEventListener('click', function() {
     mostrarSeccion("seccionCreditos");
 });
 
+// Botón para creditos registrados
+document.getElementById('btnCreditosRegistrados').addEventListener('click', function() {
+    mostrarSeccion("seccionHistorial");
+});
+
+
+
 function guardarTasa() {
     // 1. Obtener el valor del input
     const inputTasa = document.getElementById('tasaInteres');
@@ -295,6 +302,12 @@ function mostrarResultadoCredito(capacidadPago, totalPagar, cuotaMensual, aproba
     
     // Parte 6: Aplicar clase según resultado
     resultadoDiv.className = aprobado ? "aprobado" : "rechazado";
+
+    if (aprobado) {
+        btnAsignarCredito.disabled = false;
+    } else {
+        btnAsignarCredito.disabled = true;
+    }
 }
 
 // Función para limpiar todo el módulo de créditos
@@ -310,7 +323,139 @@ function limpiarCreditos() {
     document.getElementById('datosClienteCredito').innerHTML = '';
     document.getElementById('resultadoCredito').innerHTML = '';
     document.getElementById('resultadoCredito').className = '';
+    document.getElementById('btnAsignarCredito').disabled = true;
     
     // Limpiar cliente actual
     clienteActual = null;
 }
+
+// Función para asignar crédito
+function asignarCredito() {
+    if (!clienteActual) {
+        alert('No hay un cliente seleccionado');
+        return;
+    }
+    
+    // Obtener los valores del crédito calculado
+    let monto = parseFloat(document.getElementById('txtMontoCredito').value);
+    let plazo = parseFloat(document.getElementById('txtPlazoCredito').value);
+    let tasa = tasaInteres; 
+    let cuota = parseFloat(document.getElementById('spnCuotaMensual')?.innerText.replace('$', '') || 0);
+    
+    // Si no hay cuota desde el simulador, calcularla
+    if (cuota === 0) {
+        let disponible = calcularDisponible(clienteActual.ingresos, clienteActual.egresos);
+        let capacidadPago = calcularCapacidadPago(disponible);
+        let interes = calcularInteresSimple(monto, tasa, plazo);
+        let totalPagar = calcularTotalPagar(monto, interes);
+        cuota = calcularCuotaMensual(totalPagar, plazo);
+    }
+    
+    // Crear objeto crédito
+    let credito = {
+        cedula: clienteActual.cedula,
+        nombre: clienteActual.nombre,
+        apellido: clienteActual.apellido,
+        monto: monto,
+        tasa: tasa,
+        plazo: plazo,
+        cuota: cuota
+    };
+    
+    // Agregar al arreglo
+    creditos.push(credito);
+    
+    // Mostrar mensaje de éxito
+    alert(`✅ Crédito asignado exitosamente a ${clienteActual.nombre} ${clienteActual.apellido}\nMonto: $${monto}\nPlazo: ${plazo} años\nCuota: $${cuota.toFixed(2)}`);
+    
+    // Deshabilitar botón después de asignar
+    document.getElementById('btnAsignarCredito').disabled = true;
+
+    // Limpiar campos de solicitud después de asignar
+    document.getElementById('txtMontoCredito').value = '';
+    document.getElementById('txtPlazoCredito').value = '';
+    
+    console.log('Créditos asignados:', creditos);
+
+    limpiarCreditos();
+    pintarCreditos(creditos); //Cada que guarda un credito se visualiza dinamicamente
+}
+
+// ==================== FUNCIONES PARA TABLA DE CRÉDITOS ====================
+
+// Función para pintar todos los créditos en la tabla
+function pintarCreditos(listaCreditos) {
+    const tbody = document.getElementById('cuerpoTablaCreditos');
+    
+    if (!listaCreditos || listaCreditos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">📭 No hay créditos registrados</td></tr>';
+        return;
+    }
+    
+    let html = '';
+    for (let i = 0; i < listaCreditos.length; i++) {
+        const c = listaCreditos[i];
+        html += `
+            <tr>
+                <td>${c.cedula}</td>
+                <td>${c.nombre}</td>
+                <td>${c.apellido}</td>
+                <td>$${c.monto.toFixed(2)}</td>
+                <td>${c.tasa}%</td>
+                <td>${c.plazo} años (${c.plazo * 12} meses)</td>
+                <td>$${c.cuota.toFixed(2)}</td>
+                <td><button class="btn-eliminar" onclick="eliminarCredito(${i})">🗑️ Eliminar</button></td>
+            </tr>
+        `;
+    }
+    tbody.innerHTML = html;
+}
+
+// Función para buscar créditos por cédula
+function buscarCreditosCliente() {
+    const cedulapintarCreditos = document.getElementById('buscarCedulaListado').value.trim();
+    
+    if (cedulapintarCreditos === '') {
+        alert('⚠️ Ingrese una cédula para buscar');
+        return;
+    }
+    
+    const resultados = creditos.filter(credito => credito.cedula === cedulapintarCreditos);
+    
+    if (resultados.length === 0) {
+        const tbody = document.getElementById('cuerpoTablaCreditos');
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center;">❌ No se encontraron créditos para la cédula: ${cedulapintarCreditos}</td></tr>`;
+    } else {
+        pintarCreditos(resultados);
+    }
+}
+
+// Función para eliminar un crédito por índice
+function eliminarCredito(indice) {
+    if (confirm(`¿Está seguro de eliminar el crédito de ${creditos[indice].nombre} ${creditos[indice].apellido}?`)) {
+        creditos.splice(indice, 1);
+        pintarCreditos(creditos);
+        alert('✅ Crédito eliminado correctamente');
+        
+        // Si el historial está visible, actualizar
+        const seccionHistorial = document.getElementById('seccionHistorial');
+        if (seccionHistorial.style.display === 'block') {
+            mostrarHistorialCreditos();
+        }
+    }
+}
+
+// Función actualizada para mostrar historial (usa la tabla)
+function mostrarHistorialCreditos() {
+    pintarCreditos(creditos);
+}
+
+// Función actualizada para limpiar historial
+function limpiarHistorial() {
+    if (confirm('¿Está seguro de eliminar TODOS los créditos registrados? Esta acción no se puede deshacer.')) {
+        creditos = [];
+        pintarCreditos(creditos);
+        alert('✅ Historial limpiado correctamente');
+    }
+}
+
