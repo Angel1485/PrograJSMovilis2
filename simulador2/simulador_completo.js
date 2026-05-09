@@ -56,6 +56,11 @@ document.getElementById('btnCreditosRegistrados').addEventListener('click', func
     mostrarSeccion("seccionHistorial");
 });
 
+// Botón contactos
+document.getElementById('btnContacto').addEventListener('click', function() {
+    mostrarSeccion("contacto");
+});
+
 
 
 function guardarTasa() {
@@ -113,6 +118,7 @@ function guardarCliente() {
     const apellido = document.getElementById('apellido').value;
     const ingresos = Number(document.getElementById('ingresos').value);
     const egresos = Number(document.getElementById('egresos').value);
+    const email = document.getElementById('email').value;
     
     // Buscar si el cliente ya existe
     const clienteExistente = buscarCliente(cedula);
@@ -123,6 +129,7 @@ function guardarCliente() {
         clienteExistente.apellido = apellido;
         clienteExistente.ingresos = ingresos;
         clienteExistente.egresos = egresos;
+        clienteExistente.email = email;
     } else {
         // CREAR nuevo cliente
         const nuevoCliente = {
@@ -130,7 +137,8 @@ function guardarCliente() {
             nombre: nombre,
             apellido: apellido,
             ingresos: ingresos,
-            egresos: egresos
+            egresos: egresos,
+            email: email
         };
         clientes.push(nuevoCliente);
     }
@@ -149,6 +157,7 @@ function limpiarFormulario() {
     document.getElementById('apellido').value = '';
     document.getElementById('ingresos').value = '';
     document.getElementById('egresos').value = '';
+    document.getElementById('email').value = '';
     
     // Habilitar campo cédula
     document.getElementById('cedula').disabled = false;
@@ -172,6 +181,7 @@ function pintarClientes() {
             <td>${cliente.apellido}</td>
             <td>${cliente.ingresos}</td>
             <td>${cliente.egresos}</td>
+            <td>${cliente.email}</td>
             <td>
                 <button onclick="seleccionarCliente('${cliente.cedula}')">Actualizar</button>
                 <button onclick="eliminarCliente('${cliente.cedula}')">Eliminar</button>
@@ -260,6 +270,7 @@ function mostrarDatosCliente(cliente) {
         <p><strong>Apellido:</strong> ${cliente.apellido}</p>
         <p><strong>Ingresos:</strong> $${cliente.ingresos}</p>
         <p><strong>Egresos:</strong> $${cliente.egresos}</p>
+        <p><strong>Egresos:</strong> $${cliente.email}</p>
     `;
     document.getElementById('datosClienteCredito').innerHTML = html;
 }
