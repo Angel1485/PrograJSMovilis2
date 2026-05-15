@@ -7,6 +7,7 @@ let direccionActual = "derecha";
 let intervaloSerpiente = null;
 let comida = { x: 10, y: 10 };
 let puntaje = 0;
+let velocidad = 300; // Velocidad en milisegundos 
 
 // ARREGLO DE LA SERPIENTE
 // const serpiente = [
@@ -72,7 +73,7 @@ function dibujarTodo() {
   limpiarCanvas();
   dibujarTablero();
   pintarSerpiente();
-  // pintarComida();
+  //pintarComida();
 
   //  // PRUEBA 1: pintarParte(5,5)
   //   pintarParte(5, 5);
@@ -170,32 +171,44 @@ function pintarSerpiente() {
     }
 }
 
-function moverDerecha() {
+function moverDerecha(crecer = false) {
     const cabeza = serpiente[0];
     const nuevaCabeza = { x: cabeza.x + 1, y: cabeza.y };
     serpiente.unshift(nuevaCabeza);
-    serpiente.pop();
+    //serpiente.pop();
+        if (!crecer) {
+        serpiente.pop();
+    }
 }
 
-function moverIzquierda() {
+function moverIzquierda(crecer = false) {
     const cabeza = serpiente[0];
     const nuevaCabeza = { x: cabeza.x - 1, y: cabeza.y };
     serpiente.unshift(nuevaCabeza);
-    serpiente.pop();
+    //serpiente.pop();
+        if (!crecer) {
+        serpiente.pop();
+    }
 }
 
-function moverArriba() {
+function moverArriba(crecer = false) {
     const cabeza = serpiente[0];
     const nuevaCabeza = { x: cabeza.x, y: cabeza.y - 1 };
     serpiente.unshift(nuevaCabeza);
-    serpiente.pop();
+    //serpiente.pop();
+        if (!crecer) {
+        serpiente.pop();
+    }
 }
 
-function moverAbajo() {
+function moverAbajo(crecer = false) {
     const cabeza = serpiente[0];
     const nuevaCabeza = { x: cabeza.x, y: cabeza.y + 1 };
     serpiente.unshift(nuevaCabeza);
-    serpiente.pop();
+    //serpiente.pop();
+        if (!crecer) {
+        serpiente.pop();
+    }
 }
 
 function cambiarDireccion(direccion) {
@@ -226,6 +239,12 @@ function moverSerpiente() {
         moverAbajo(atrapo);
     }
     
+    // Verificar colisión con bordes 
+    if (colisionConBordes()) {
+        gameOver();
+        return; // Salir de la función para no seguir ejecutando
+    }
+
     // Si atrapó comida
     if (atrapo) {
         puntaje++;
@@ -324,7 +343,7 @@ function crecerSerpiente() {
 
 function iniciarJuego() {
     if (intervaloSerpiente === null) {
-        intervaloSerpiente = setInterval(moverSerpiente, 500);
+        intervaloSerpiente = setInterval(moverSerpiente, velocidad);
         document.getElementById("estado").innerText = "Jugando";
         document.getElementById("mensaje").innerText = "¡Juego en curso!";
     }
@@ -366,4 +385,43 @@ function reiniciarJuego() {
     
     // Dibujar todo
     dibujarTodo();
+}
+
+function colisionConBordes() {
+    const cabeza = serpiente[0];
+    
+    // Obtener límites del tablero (ancho y alto en celdas)
+    const maxX = canvas.width / TAMANIO_CELDA;
+    const maxY = canvas.height / TAMANIO_CELDA;
+    
+    // Verificar si la cabeza toca algún borde
+    if (cabeza.x < 0 || cabeza.x >= maxX || cabeza.y < 0 || cabeza.y >= maxY) {
+        return true;
+    }
+    return false;
+}
+
+function gameOver() {
+    // Detener el intervalo del juego
+    if (intervaloSerpiente !== null) {
+        clearInterval(intervaloSerpiente);
+        intervaloSerpiente = null;
+    }
+    
+    // Mostrar mensaje de GAME OVER
+    document.getElementById("estado").innerText = "GAME OVER";
+    document.getElementById("mensaje").innerText = "¡Has perdido! Presiona Reiniciar para jugar de nuevo.";
+    
+    // Dibujar mensaje en el canvas
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.font = "bold 40px Arial";
+    ctx.fillStyle = "#ff0000";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
+    
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Presiona Reiniciar", canvas.width/2, canvas.height/2 + 50);
 }
