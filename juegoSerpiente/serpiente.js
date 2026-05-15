@@ -7,7 +7,7 @@ let direccionActual = "derecha";
 let intervaloSerpiente = null;
 let comida = { x: 10, y: 10 };
 let puntaje = 0;
-let velocidad = 300; // Velocidad en milisegundos 
+let velocidad = 200; // Velocidad en milisegundos 
 
 // ARREGLO DE LA SERPIENTE
 // const serpiente = [
@@ -176,7 +176,7 @@ function moverDerecha(crecer = false) {
     const nuevaCabeza = { x: cabeza.x + 1, y: cabeza.y };
     serpiente.unshift(nuevaCabeza);
     //serpiente.pop();
-        if (!crecer) {
+    if (!crecer) {
         serpiente.pop();
     }
 }
@@ -186,7 +186,7 @@ function moverIzquierda(crecer = false) {
     const nuevaCabeza = { x: cabeza.x - 1, y: cabeza.y };
     serpiente.unshift(nuevaCabeza);
     //serpiente.pop();
-        if (!crecer) {
+    if (!crecer) {
         serpiente.pop();
     }
 }
@@ -196,7 +196,7 @@ function moverArriba(crecer = false) {
     const nuevaCabeza = { x: cabeza.x, y: cabeza.y - 1 };
     serpiente.unshift(nuevaCabeza);
     //serpiente.pop();
-        if (!crecer) {
+    if (!crecer) {
         serpiente.pop();
     }
 }
@@ -206,7 +206,7 @@ function moverAbajo(crecer = false) {
     const nuevaCabeza = { x: cabeza.x, y: cabeza.y + 1 };
     serpiente.unshift(nuevaCabeza);
     //serpiente.pop();
-        if (!crecer) {
+    if (!crecer) {
         serpiente.pop();
     }
 }
@@ -256,7 +256,10 @@ function moverSerpiente() {
             generarComida();
         }
     }
-    
+
+    // Redibujar todo el estado actual
+    limpiarCanvas();
+    dibujarTablero();
     pintarSerpiente();
     pintarComida();
 }
@@ -384,7 +387,7 @@ function reiniciarJuego() {
     generarComida();
     
     // Dibujar todo
-    dibujarTodo();
+   dibujarTodo();
 }
 
 function colisionConBordes() {
