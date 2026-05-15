@@ -7,7 +7,7 @@ let direccionActual = "derecha";
 let intervaloSerpiente = null;
 let comida = { x: 10, y: 10 };
 let puntaje = 0;
-let velocidad = 400; // Velocidad en milisegundos 
+let velocidad = 200; // Velocidad en milisegundos 
 
 // ARREGLO DE LA SERPIENTE
 // const serpiente = [
