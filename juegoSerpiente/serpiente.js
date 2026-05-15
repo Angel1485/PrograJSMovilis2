@@ -7,7 +7,7 @@ let direccionActual = "derecha";
 let intervaloSerpiente = null;
 let comida = { x: 10, y: 10 };
 let puntaje = 0;
-let velocidad = 200; // Velocidad en milisegundos 
+let velocidad = 1000; // Velocidad en milisegundos 
 
 // ARREGLO DE LA SERPIENTE
 // const serpiente = [
@@ -245,6 +245,12 @@ function moverSerpiente() {
         return; // Salir de la función para no seguir ejecutando
     }
 
+    // Verificar colisión con el cuerpo
+    if (colisionConCuerpo()) {
+        gameOver();
+        return;
+    }
+    
     // Si atrapó comida
     if (atrapo) {
         puntaje++;
@@ -427,4 +433,16 @@ function gameOver() {
     ctx.font = "20px Arial";
     ctx.fillStyle = "#ffffff";
     ctx.fillText("Presiona Reiniciar", canvas.width/2, canvas.height/2 + 50);
+}
+
+function colisionConCuerpo() {
+    const cabeza = serpiente[0];
+    
+    // Comenzar desde el índice 1 (omitir la cabeza)
+    for (let i = 1; i < serpiente.length; i++) {
+        if (serpiente[i].x === cabeza.x && serpiente[i].y === cabeza.y) {
+            return true;
+        }
+    }
+    return false;
 }
