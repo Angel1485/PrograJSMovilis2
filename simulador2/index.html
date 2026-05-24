@@ -16,7 +16,9 @@
   <button id="btnClientes">Clientes</button>
   <button id="btnCreditos">Créditos</button>
   <button id="btnCreditosRegistrados">Créditos Registrados</button>
+  <button class="btn-primary" onclick="mostrarCreditosVIP()">⭐ Créditos VIP</button>
   <button id="btnContacto">Contactos</button>
+  <button onclick="mostrarAcercaDe()">ℹ️ Acerca de</button>
 </nav>
 
 <section id="parametros">
@@ -25,6 +27,12 @@
   <label>Tasa de interés:</label>
   <input type="number" id="tasaInteres" min="10" max="20" value="15">
   <span>%</span>
+
+  <div class="input-group">
+    <label for="txtMontoMaximo">💰 Monto Máximo Permitido ($)</label>
+    <input type="text" id="txtMontoMaximo" placeholder="Ej: 10000">
+    <div class="error-message" id="errorMontoMaximo"></div>
+  </div>
 
   <br>
   <button id="btnGuardarTasa">Guardar tasa</button>
@@ -40,7 +48,8 @@
   <input type="text" id="apellido" placeholder="Apellido">
   <input type="number" id="ingresos" placeholder="Ingresos">
   <input type="number" id="egresos" placeholder="Egresos">
-   <input type="email" name="email" id="email" placeholder="E-mail">
+  <input type="number" id="telefono" placeholder="Telefono">
+  <input type="email" name="email" id="email" placeholder="E-mail">
 
   <br>
   <!-- Difernetes metodos de invocar una funcion para los botones -->
@@ -55,6 +64,7 @@
         <th>Apellido</th>
         <th>Ingresos</th>
         <th>Egresos</th>
+        <th>Telefono</th>
         <th>E-mail</th>
         <th>Acciones</th>
       </tr>
@@ -66,6 +76,7 @@
           <td>Pérez</td>
           <td>1200</td>
           <td>500</td>
+          <td>074189323</td>
           <td>example@outlook.com</td>
           <td>
             <button>Actualizar</button>
@@ -78,6 +89,7 @@
           <td>Gómez</td>
           <td>1500</td>
           <td>600</td>
+          <td>074189324</td>
           <td>example@outlook.com</td>
           <td>
             <button>Actualizar</button>
@@ -90,6 +102,7 @@
           <td>Ramírez</td>
           <td>900</td>
           <td>350</td>
+          <td>074189325</td>
           <td>example@outlook.com</td>
           <td>
             <button>Actualizar</button>
@@ -139,6 +152,7 @@
         <input type="text" id="buscarCedulaListado" placeholder="Buscar por cédula...">
         <button class="btn-primary" onclick="buscarCreditosCliente()">🔍 Buscar</button>
         <button class="btn-secondary" onclick="pintarCreditos(creditos)">📋 Ver todos</button>
+        <button class="btn-primary" onclick="mostrarCreditosVIP()">⭐ Créditos VIP</button>
         <!-- <button class="btn-secondary" onclick="exportarHistorial()">📄 Exportar</button> -->
     </div>
     
@@ -166,6 +180,27 @@
     
     <div class="buttons" style="margin-top: 20px;">
         <button class="btn-secondary" onclick="limpiarHistorial()">🗑️ Limpiar Todo</button>
+    </div>
+</div>
+
+<!-- Modal Acerca de -->
+<div id="modalAcercaDe" class="modal-acerca">
+    <div class="modal-acerca-content">
+        <span class="close-acerca" onclick="cerrarAcercaDe()">&times;</span>
+        <div class="acerca-foto">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Desarrollador">
+        </div>
+        <h2>Angel Andres Sarango Duchitanga</h2>
+        <p class="carrera">💻 Desarrollo de Software</p>
+        <div class="acerca-info">
+            <p>📧 angel@facebook.com</p>
+            <p>🔗 GitHub: @Angel1485</p>
+            <p>💼 LinkedIn: /in/angel-krake</p>
+        </div>
+        <div class="frase">
+            "Convertir líneas de código en soluciones financieras que transforman vidas."
+        </div>
+        <div class="version">Simulador de Crédito v2.0 | Banco del Pacífico</div>
     </div>
 </div>
 
