@@ -105,6 +105,8 @@ function seleccionarCliente(cedula) {
         document.getElementById('apellido').value = cliente.apellido;
         document.getElementById('ingresos').value = cliente.ingresos;
         document.getElementById('egresos').value = cliente.egresos;
+        document.getElementById('telefono').value = cliente.telefono;
+        document.getElementById('email').value = cliente.email;
         
         // Deshabilitar campo cédula mientras se edita
         document.getElementById('cedula').disabled = true;
@@ -118,6 +120,7 @@ function guardarCliente() {
     const apellido = document.getElementById('apellido').value;
     const ingresos = Number(document.getElementById('ingresos').value);
     const egresos = Number(document.getElementById('egresos').value);
+    const telefono = Number(document.getElementById('telefono').value);
     const email = document.getElementById('email').value;
     
     // Buscar si el cliente ya existe
@@ -129,6 +132,7 @@ function guardarCliente() {
         clienteExistente.apellido = apellido;
         clienteExistente.ingresos = ingresos;
         clienteExistente.egresos = egresos;
+        clienteExistente.telefono = telefono;
         clienteExistente.email = email;
     } else {
         // CREAR nuevo cliente
@@ -138,6 +142,7 @@ function guardarCliente() {
             apellido: apellido,
             ingresos: ingresos,
             egresos: egresos,
+            telefono: telefono,
             email: email
         };
         clientes.push(nuevoCliente);
@@ -157,6 +162,7 @@ function limpiarFormulario() {
     document.getElementById('apellido').value = '';
     document.getElementById('ingresos').value = '';
     document.getElementById('egresos').value = '';
+    document.getElementById('telefono').value = '';
     document.getElementById('email').value = '';
     
     // Habilitar campo cédula
@@ -181,6 +187,7 @@ function pintarClientes() {
             <td>${cliente.apellido}</td>
             <td>${cliente.ingresos}</td>
             <td>${cliente.egresos}</td>
+            <td>${cliente.telefono}</td>
             <td>${cliente.email}</td>
             <td>
                 <button onclick="seleccionarCliente('${cliente.cedula}')">Actualizar</button>
@@ -270,7 +277,8 @@ function mostrarDatosCliente(cliente) {
         <p><strong>Apellido:</strong> ${cliente.apellido}</p>
         <p><strong>Ingresos:</strong> $${cliente.ingresos}</p>
         <p><strong>Egresos:</strong> $${cliente.egresos}</p>
-        <p><strong>Egresos:</strong> $${cliente.email}</p>
+        <p><strong>Telefono:</strong> $${cliente.telefono}</p>
+        <p><strong>Email:</strong> $${cliente.email}</p>
     `;
     document.getElementById('datosClienteCredito').innerHTML = html;
 }
@@ -285,7 +293,15 @@ function calcularCreditoCliente() {
     // Obtener valores
     let monto = parseFloat(document.getElementById('txtMontoCredito').value);
     let plazoAnios = parseFloat(document.getElementById('txtPlazoCredito').value);
+    let montoMaximo = parseFloat(document.getElementById('txtMontoMaximo').value);
     let tasaInteres1 = tasaInteres; // Tasa para este taller
+
+        // Validar monto máximo
+    if (!isNaN(montoMaximo) && monto > montoMaximo) {
+        alert(`⚠️ ERROR: El monto excede el máximo permitido de $${montoMaximo.toFixed(2)}`);
+        document.getElementById('txtMontoCredito').value = '';
+        return;
+    }
     
     // Usar funciones existentes
     let disponible = calcularDisponible(clienteActual.ingresos, clienteActual.egresos);
@@ -468,5 +484,30 @@ function limpiarHistorial() {
         pintarCreditos(creditos);
         alert('✅ Historial limpiado correctamente');
     }
+}
+
+// Función para mostrar solo créditos mayores a $5000
+function mostrarCreditosVIP() {
+    // Filtrar créditos con monto > 5000
+    let creditosVIP = creditos.filter(credito => credito.monto >= 5000);
+    
+    // Mostrar en la tabla usando la función existente
+    pintarCreditos(creditosVIP);
+    
+    // Mostrar mensaje si no hay resultados
+    if (creditosVIP.length === 0) {
+        const tbody = document.getElementById('cuerpoTablaCreditos');
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 40px;">
+            ⭐ No hay créditos VIP (mayores a $5,000)
+        </td></tr>`;
+    }
+}
+
+function mostrarAcercaDe() {
+    document.getElementById('modalAcercaDe').style.display = 'flex';
+}
+
+function cerrarAcercaDe() {
+    document.getElementById('modalAcercaDe').style.display = 'none';
 }
 
