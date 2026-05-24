@@ -4,3 +4,4 @@ Por favor tomar en cuenta que los videos del examen son los dos ultimos con fech
 
 Link de vercel simulador de credito 2: https://progra-js-movilis2-cbet.vercel.app/ 
 
+Link del github: https://github.com/Angel1485/PrograJSMovilis2/tree/main/simulador2
