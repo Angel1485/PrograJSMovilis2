@@ -3,3 +3,7 @@ Link Videos: https://institutomovilis-my.sharepoint.com/:f:/g/personal/aa_sarang
 Por favor tomar en cuenta que los videos del examen son los dos ultimos con fecha 23/05/2026
 
 Link de vercel juego de serpiente: https://progra-js-movilis2-31kg.vercel.app/
+
+Link github: https://github.com/Angel1485/PrograJSMovilis2/tree/main/juegoSerpiente
+
+Nota: Se realizo un mismo directorio para todo slos ejerccios de JS2
