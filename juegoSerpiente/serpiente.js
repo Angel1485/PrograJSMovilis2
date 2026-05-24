@@ -211,6 +211,7 @@ function moverAbajo(crecer = false) {
     }
 }
 
+//Validaciones de cambio de direccion 
 function cambiarDireccion(direccion) {
     // Evitar que la serpiente vaya en dirección contraria
     if (direccion === "derecha" && direccionActual !== "izquierda") {
